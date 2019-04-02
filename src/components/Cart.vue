@@ -42,8 +42,16 @@ export default {
   },
   data() {
     return {
-      cart: []
+      cart: JSON.parse(localStorage.getItem('cart')) || []
     };
+  },
+  watch: {
+    cart: {
+      handler(newVal, oldVal) {
+        localStorage.setItem('cart', JSON.stringify(newVal));
+      },
+      deep: true
+    }
   },
   created() {
     this.$bus.$on("addGoodToCart", good => {
